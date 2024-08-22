@@ -21,7 +21,7 @@ use crate::{
 /// Custom rust repository.
 const RUST_REPO: &str = "https://github.com/wasix-org/rust.git";
 /// Branch to use in the custom Rust repo.
-const RUST_BRANCH: &str = "wasix";
+const RUST_BRANCH: &str = "v2023-11-01.1";
 
 const RUSTUP_TOOLCHAIN_NAME: &str = "wasix";
 
@@ -142,10 +142,10 @@ pub fn build_toolchain(
     if !options.build_rust {
         return Ok(None);
     }
-
+    let tag = "v2023-11-01.1";
     let out = build_rust(
         &options.root,
-        None,
+        Some(tag),
         options.rust_host_triple.as_deref(),
         options.update_repos,
     )?;
@@ -553,7 +553,7 @@ fn download_toolchain(target: &str, toolchains_root_dir: &Path) -> Result<PathBu
     let repo = RUST_REPO
         .trim_start_matches("https://github.com/")
         .trim_end_matches(".git");
-    let release_url = format!("https://api.github.com/repos/{repo}/releases/latest");
+    let release_url = format!("https://api.github.com/repos/{repo}/releases/tags/v2023-11-01.1");
 
     eprintln!("Finding latest release... ({release_url})...");
 
